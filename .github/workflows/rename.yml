@@ -1,0 +1,26 @@
+name: Rename file
+on:
+  workflow_dispatch:
+    inputs:
+      old:
+        description: Old file name
+        required: true
+        default: index.html
+      new:
+        description: New file name
+        required: true
+        default: nextgen.html
+permissions:
+  contents: write
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rename file
+        run: |
+          git config user.name "ladlabaloch512-blip"
+          git config user.email "ladlabaloch512-blip@users.noreply.github.com"
+          git mv "${{ inputs.old }}" "${{ inputs.new }}"
+          git commit -m "Rename ${{ inputs.old }} to ${{ inputs.new }}"
+          git push
